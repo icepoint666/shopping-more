@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block head %}
+<style>
+    #images{
+        display:flex;
+        flex-direction:row;
+    }
+
+    #image{
+        width:380px;
+        height:380px;
+        overflow:hidden;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .container{
+        max-width: 1520px;
+    }
+    body {
+        min-height: 75rem;
+    }
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+    }
+
+    #description {
+        overflow:hidden;
+        text-overflow: ellipsis;
+        height:80px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="jumbotron bg-light">
+            <h1>{{categoryName}}</h1>
+            <p class="lead">ShoppingMore selected the most popular categories for you.</p>
+            <a class="btn btn-lg btn-danger" href="/" role="button">View Quality Goods &raquo;</a>
+        </div>
+    </div>
+    {% if existItem %}
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                {% for data in itemData %}
+                <div class="col-md-3">
+                    <div class="card mb-4 shadow-sm">
+                        <div id="images">
+                                <div id="image">
+                                    <img src={{url_for('static', filename='uploads/' + data[4]) }} id="itemImage"/>
+                                </div>
+                            </div>
+                        <div class="card-body">
+                            <h4 class="card-text text-danger">{{data[1]}}</h4>
+                            <div id="description">
+                                <p class="card-text text-muted">{{data[3]}}</p>
+                            </div>
+                            <h6 class="card-text text-muted">Stock: {{data[5]}}</h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-sm btn-outline-danger" href="/addToCart?productId={{data[0]}}">Add to Cart</a>
+                                </div>
+                                <p class="text-danger" style="font-size:150%">￥{{data[2]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+
+    {% endif %}
+{% endblock %}
